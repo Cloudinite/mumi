@@ -135,7 +135,7 @@ if(!localStorage.getItem('cookie-consent')){
   document.getElementById('cookie-banner').style.display='flex';
 }
 // Dynamic copyright year
-document.addEventListener('DOMContentLoaded',function(){setInterval(function(){document.querySelectorAll('footer, [class*=footer]').forEach(function(f){f.querySelectorAll('span,p,div').forEach(function(el){if(el.textContent.includes('2025')){el.textContent=el.textContent.replace('2025',new Date().getFullYear())}})})},500)});
+document.addEventListener('DOMContentLoaded',function(){setInterval(function(){document.querySelectorAll('footer span, footer p, footer div').forEach(function(el){if(el.children.length===0&&el.textContent.includes('2025')){el.textContent=el.textContent.replace('2025',new Date().getFullYear())}})},1000)});
 function acceptCookies(){localStorage.setItem('cookie-consent','accepted');document.getElementById('cookie-banner').style.display='none'}
 function declineCookies(){document.getElementById('cookie-banner').style.display='none'}
 </script>
