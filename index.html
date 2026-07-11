@@ -13,15 +13,14 @@
 #root{opacity:0;transform:translateY(8px);transition:opacity .6s ease .1s,transform .6s ease .1s}
 #root.loaded{opacity:1;transform:translateY(0)}
 
-/* ── Scroll-to-top button ── */
-#scroll-top-btn{position:fixed;bottom:20px;left:20px;z-index:50;width:40px;height:40px;border-radius:50%;background:rgba(11,15,20,.92);border:1px solid rgba(255,255,255,.1);color:#AAB4C0;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:color .2s,border-color .2s,opacity .3s,transform .3s;opacity:0;transform:translateY(10px);pointer-events:none}
-#scroll-top-btn.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+/* ── Scroll-to-top button — ALWAYS visible ── */
+#scroll-top-btn{position:fixed!important;bottom:20px!important;left:20px!important;z-index:9990!important;width:40px;height:40px;border-radius:50%;background:rgba(11,15,20,.92);border:1px solid rgba(255,255,255,.1);color:#AAB4C0;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:color .2s,border-color .2s}
 #scroll-top-btn:hover{color:#22d3ee;border-color:rgba(34,211,238,.3)}
 #scroll-top-btn:active{transform:scale(.92)}
 #scroll-top-btn svg{width:16px;height:16px}
 
-/* ── Push language switcher next to scroll btn ── */
-[data-testid="navbar-language-switcher"]{left:68px!important}
+/* ── Language switcher — ALWAYS fixed, next to scroll btn ── */
+[data-testid="navbar-language-switcher"]{position:fixed!important;bottom:20px!important;left:68px!important;z-index:9990!important}
 </style></head><body>
 
 <!-- Loading Screen -->
@@ -32,7 +31,7 @@
 
 <div id="root"></div>
 
-<!-- Scroll to top button -->
+<!-- Scroll to top button — always visible -->
 <div id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 </div>
@@ -42,10 +41,6 @@
 var loader=document.getElementById('loader'),root=document.getElementById('root');
 var obs=new MutationObserver(function(){if(root.children.length>0){root.classList.add('loaded');setTimeout(function(){loader.classList.add('hide')},200);obs.disconnect()}});
 obs.observe(root,{childList:true});
-// Fallback: hide loader after 3s even if React is slow
 setTimeout(function(){root.classList.add('loaded');loader.classList.add('hide')},3000);
-// Scroll-to-top visibility
-var stb=document.getElementById('scroll-top-btn');
-window.addEventListener('scroll',function(){stb.classList.toggle('visible',window.scrollY>300)},{passive:true});
 </script>
 </body></html>
