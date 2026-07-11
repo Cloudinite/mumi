@@ -10,7 +10,7 @@
 
 <br/>
 
-<img src="mumi.png" width="80" alt="Mumi Logo"/>
+<img src="mumi.png" width="200" alt="Mumi Logo"/>
 
 <br/><br/>
 
