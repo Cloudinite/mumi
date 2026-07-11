@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noir — Fine Dining</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:#060504;color:#c0b8a8;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}
+.nav{position:fixed;top:0;width:100%;padding:0 2rem;height:62px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,5,4,.92);backdrop-filter:blur(20px);z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:#d4a574}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.72rem;color:rgba(192,184,168,.45);letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:#d4a574}
+.reserve-btn{padding:9px 20px;border:1px solid rgba(212,165,116,.3);color:#d4a574;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all .3s}
+.reserve-btn:hover{background:#d4a574;color:#060504}
+
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-bg{position:absolute;inset:0}.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.28)}
+.hero-content{position:relative;z-index:2}
+.hero h1{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:400;color:#ede4d8;line-height:1.08;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:#d4a574}
+.hero p{max-width:420px;margin:0 auto 2rem;color:rgba(192,184,168,.5);font-size:.85rem;line-height:1.8}
+
+.section-title{text-align:center;margin-bottom:2.5rem}
+.section-title .line{width:40px;height:1px;background:rgba(212,165,116,.3);margin:0 auto 1.2rem}
+.section-title h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:#ede4d8}
+
+.menu{padding:5rem 2rem;max-width:650px;margin:0 auto}
+.menu-tabs{display:flex;justify-content:center;gap:.4rem;margin-bottom:2rem;flex-wrap:wrap}
+.menu-tab{padding:7px 18px;border:1px solid rgba(212,165,116,.12);color:rgba(192,184,168,.45);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;cursor:pointer;transition:all .3s}
+.menu-tab.active,.menu-tab:hover{border-color:rgba(212,165,116,.35);color:#d4a574;background:rgba(212,165,116,.05)}
+.menu-panel{display:none}.menu-panel.active{display:block}
+.menu-item{display:flex;align-items:baseline;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.menu-item-info{flex:1}
+.menu-item h3{font-size:.85rem;font-weight:500;color:#ede4d8}
+.menu-item .desc{font-size:.7rem;color:rgba(192,184,168,.35);margin-top:.2rem}
+.menu-item .dots{flex:1;border-bottom:1px dotted rgba(255,255,255,.06);margin:0 .8rem;align-self:flex-end;margin-bottom:4px;min-width:30px}
+.menu-item .price{font-family:'Playfair Display',serif;font-size:1rem;color:#d4a574}
+
+.chef{padding:4rem 2rem}
+.chef-inner{display:flex;gap:2rem;max-width:900px;margin:0 auto;align-items:center}
+.chef-img{width:280px;height:360px;border-radius:8px;object-fit:cover;filter:brightness(.85);flex-shrink:0}
+.chef-text h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:#ede4d8;margin-bottom:.3rem}
+.chef-text .role{font-size:.72rem;color:#d4a574;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.chef-text p{font-size:.82rem;color:rgba(192,184,168,.5);line-height:1.7}
+
+.gallery{padding:3rem 2rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:3px;max-width:1000px;margin:0 auto}
+.gallery-grid img{width:100%;height:200px;object-fit:cover;filter:brightness(.8);transition:all .4s;cursor:pointer}
+.gallery-grid img:hover{filter:brightness(1);transform:scale(1.02)}
+
+.wine{padding:4rem 2rem;text-align:center;max-width:600px;margin:0 auto}
+.wine h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:#ede4d8;margin-bottom:.8rem}
+.wine p{font-size:.82rem;color:rgba(192,184,168,.4);line-height:1.7;margin-bottom:1.5rem}
+.wine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center}
+.wine-item .num{font-family:'Playfair Display',serif;font-size:2.2rem;color:#d4a574}
+.wine-item .label{font-size:.65rem;color:rgba(192,184,168,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
+
+.reservation{padding:4rem 2rem;max-width:450px;margin:0 auto;text-align:center}
+.res-form{display:flex;flex-direction:column;gap:.7rem;margin-top:1.5rem}
+.res-form input,.res-form select{padding:12px 16px;background:rgba(212,165,116,.04);border:1px solid rgba(212,165,116,.1);color:#c0b8a8;font-size:.8rem;outline:none;font-family:inherit}
+.res-form input::placeholder{color:rgba(192,184,168,.3)}
+.res-form select{appearance:none;cursor:pointer}
+.res-form select option{background:#1a1a1a}
+.res-row{display:flex;gap:.5rem}
+.res-row>*{flex:1}
+.res-submit{padding:14px;background:#d4a574;color:#060504;border:none;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.res-submit:hover{background:#e0b88a}
+
+.footer{padding:2rem;border-top:1px solid rgba(255,255,255,.03);text-align:center;font-size:.65rem;color:rgba(192,184,168,.2)}
+@media(max-width:768px){.hero h1{font-size:3rem}.chef-inner{flex-direction:column}.chef-img{width:100%;height:250px}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="#" class="nav-logo">Noir</a>
+  <ul class="nav-links"><li><a href="#" onclick="document.querySelector('.menu').scrollIntoView({behavior:'smooth'});return false">Menu</a></li><li><a href="#" onclick="document.querySelector('.chef').scrollIntoView({behavior:'smooth'});return false">Chef</a></li><li><a href="#" onclick="document.querySelector('.gallery').scrollIntoView({behavior:'smooth'});return false">Gallery</a></li></ul>
+  <button class="reserve-btn" onclick="document.querySelector('.reservation').scrollIntoView({behavior:'smooth'})">Reserve</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80" alt="Restaurant"></div>
+  <div class="hero-content">
+    <h1>The Art of <em>Taste</em></h1>
+    <p>A culinary journey where every dish is a masterpiece. Seasonal ingredients, timeless techniques.</p>
+    <button class="reserve-btn" style="padding:12px 32px" onclick="document.querySelector('.reservation').scrollIntoView({behavior:'smooth'})">Reserve a Table &#8594;</button>
+  </div>
+</section>
+
+<section class="menu">
+  <div class="section-title"><div class="line"></div><h2>Tasting Menu</h2></div>
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));document.getElementById('starters').classList.add('active')">Starters</button>
+    <button class="menu-tab" onclick="document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));document.getElementById('mains').classList.add('active')">Main Course</button>
+    <button class="menu-tab" onclick="document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));document.getElementById('desserts').classList.add('active')">Desserts</button>
+    <button class="menu-tab" onclick="document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));document.getElementById('wines').classList.add('active')">Wine Pairing</button>
+  </div>
+  <div id="starters" class="menu-panel active">
+    <div class="menu-item"><div class="menu-item-info"><h3>Wagyu Tartare</h3><div class="desc">Black truffle, quail egg yolk, brioche crisps</div></div><div class="dots"></div><div class="price">&euro;38</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Hokkaido Scallop</h3><div class="desc">Yuzu beurre blanc, tobiko roe, micro herbs</div></div><div class="dots"></div><div class="price">&euro;34</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Lobster Bisque</h3><div class="desc">Cognac reduction, cr&egrave;me fra&icirc;che, tarragon oil</div></div><div class="dots"></div><div class="price">&euro;28</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Foie Gras Terrine</h3><div class="desc">Fig compote, Sauternes jelly, toasted brioche</div></div><div class="dots"></div><div class="price">&euro;42</div></div>
+  </div>
+  <div id="mains" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><h3>Duck Confit</h3><div class="desc">Cherry reduction, potato gratin, roasted parsnip</div></div><div class="dots"></div><div class="price">&euro;48</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Seared Sea Bass</h3><div class="desc">Saffron risotto, asparagus, lemon beurre blanc</div></div><div class="dots"></div><div class="price">&euro;44</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>A5 Wagyu Ribeye</h3><div class="desc">Truffle jus, bone marrow butter, seasonal vegetables</div></div><div class="dots"></div><div class="price">&euro;95</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Lamb Rack</h3><div class="desc">Herb crust, ratatouille, rosemary jus</div></div><div class="dots"></div><div class="price">&euro;52</div></div>
+  </div>
+  <div id="desserts" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><h3>Chocolate Souffl&eacute;</h3><div class="desc">Valrhona 72%, vanilla bean ice cream</div></div><div class="dots"></div><div class="price">&euro;18</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Cr&egrave;me Br&ucirc;l&eacute;e</h3><div class="desc">Tahitian vanilla, caramelized sugar, fresh berries</div></div><div class="dots"></div><div class="price">&euro;16</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Cheese Selection</h3><div class="desc">5 artisanal cheeses, quince paste, walnut bread</div></div><div class="dots"></div><div class="price">&euro;22</div></div>
+  </div>
+  <div id="wines" class="menu-panel">
+    <div class="menu-item"><div class="menu-item-info"><h3>Champagne &middot; Dom P&eacute;rignon 2013</h3><div class="desc">Elegant, complex, notes of citrus and toasted almond</div></div><div class="dots"></div><div class="price">&euro;45/gl</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>White &middot; Puligny-Montrachet 2020</h3><div class="desc">Burgundy, mineral, white flower, butter</div></div><div class="dots"></div><div class="price">&euro;28/gl</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Red &middot; Barolo DOCG 2018</h3><div class="desc">Piedmont, tar, rose, dried cherry, long finish</div></div><div class="dots"></div><div class="price">&euro;32/gl</div></div>
+  </div>
+</section>
+
+<section class="chef">
+  <div class="chef-inner">
+    <img class="chef-img" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=400&q=80" alt="Chef" loading="lazy">
+    <div class="chef-text">
+      <h2>Chef Antoine Moreau</h2>
+      <div class="role">Executive Chef &middot; 2 Michelin Stars</div>
+      <p>With over 20 years of culinary experience across Paris, Tokyo, and New York, Chef Moreau brings a philosophy of "respect the ingredient" to every plate. His tasting menus change with the seasons, sourcing directly from local farmers and artisan producers.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="gallery-grid">
+    <img src="https://images.unsplash.com/photo-1663530761401-15eefb544889?w=400&q=80" alt="Chef plating">
+    <img src="https://images.unsplash.com/photo-1616669944447-d65d41a222bd?w=400&q=80" alt="Dish">
+    <img src="https://images.unsplash.com/photo-1676471926534-d5c9771909fa?w=400&q=80" alt="Plating">
+    <img src="https://images.unsplash.com/photo-1616671285410-2a676a9a433d?w=400&q=80" alt="Cuisine">
+    <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&q=80" alt="Interior">
+  </div>
+</section>
+
+<section class="wine">
+  <div class="section-title"><div class="line"></div><h2>By the Numbers</h2></div>
+  <div class="wine-grid">
+    <div class="wine-item"><div class="num">12</div><div class="label">Years of Excellence</div></div>
+    <div class="wine-item"><div class="num">2</div><div class="label">Michelin Stars</div></div>
+    <div class="wine-item"><div class="num">300+</div><div class="label">Wine Selection</div></div>
+  </div>
+</section>
+
+<section class="reservation">
+  <div class="section-title"><div class="line"></div><h2>Reserve Your Table</h2></div>
+  <form class="res-form" onsubmit="event.preventDefault();this.querySelector('.res-submit').textContent='Confirmed! See you soon.';this.querySelector('.res-submit').style.background='#28a745';this.querySelector('.res-submit').style.color='#fff'">
+    <input type="text" placeholder="Full Name" required>
+    <div class="res-row"><input type="email" placeholder="Email" required><input type="tel" placeholder="Phone"></div>
+    <div class="res-row"><input type="date" required><select><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5-6 Guests</option><option>Private Room</option></select></div>
+    <select><option value="" disabled selected>Preferred Time</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option></select>
+    <input type="text" placeholder="Special requests (allergies, celebrations...)">
+    <button class="res-submit" type="submit">Confirm Reservation</button>
+  </form>
+  <p style="margin-top:1.5rem;font-size:.72rem;color:rgba(192,184,168,.3)">Open Wed–Sun &middot; 18:00–23:00 &middot; Smart casual dress code</p>
+</section>
+
+<footer class="footer">&copy; 2025 Noir Fine Dining &middot; 7 Rue de la Paix, Paris &middot; +33 1 42 68 12 34</footer>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Gentry — Premium Barbershop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:#0e0e0e;color:#c8bfa9;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}
+.nav{position:fixed;top:0;width:100%;padding:0 2rem;height:62px;display:flex;align-items:center;justify-content:space-between;background:rgba(14,14,14,.92);backdrop-filter:blur(20px);z-index:100;border-bottom:1px solid rgba(200,191,169,.08)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.75rem;color:rgba(200,191,169,.5);letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:#c8bfa9}
+.book-btn{padding:9px 20px;border:1px solid rgba(200,191,169,.3);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:#c8bfa9;cursor:pointer;transition:all .3s}
+.book-btn:hover{background:#c8bfa9;color:#0e0e0e}
+
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0}.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(14,14,14,.95),rgba(14,14,14,.3))}
+.hero-content{position:relative;z-index:2;padding:0 3rem;max-width:600px}
+.line{width:40px;height:1px;background:rgba(200,191,169,.3);margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;line-height:1.05;margin-bottom:1.2rem;color:#ede8df}
+.hero p{font-size:.9rem;color:rgba(200,191,169,.55);line-height:1.8;margin-bottom:2rem;max-width:400px}
+
+.section-title{text-align:center;margin-bottom:3rem}
+.section-title .line{width:40px;height:1px;background:rgba(200,191,169,.3);margin:0 auto 1.2rem}
+.section-title h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:#ede8df}
+.section-title p{font-size:.8rem;color:rgba(200,191,169,.4);margin-top:.5rem}
+
+.services{padding:5rem 2rem;max-width:800px;margin:0 auto}
+.service-item{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-bottom:1px solid rgba(200,191,169,.07);cursor:pointer;transition:padding .3s}
+.service-item:hover{padding-left:.8rem}
+.service-item h3{font-size:.88rem;font-weight:500;color:#ede8df}
+.service-item .desc{font-size:.72rem;color:rgba(200,191,169,.35);margin-top:.2rem}
+.service-item .price{font-family:'Playfair Display',serif;font-size:1.1rem;color:#c8bfa9}
+
+.team{padding:5rem 2rem}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:900px;margin:0 auto}
+.team-card{text-align:center}
+.team-card img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;filter:brightness(.85);transition:all .3s}
+.team-card:hover img{filter:brightness(1);transform:translateY(-3px)}
+.team-card h4{font-size:.85rem;font-weight:500;color:#ede8df;margin-top:.8rem}
+.team-card p{font-size:.68rem;color:rgba(200,191,169,.4)}
+
+.gallery{padding:3rem 2rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:3px;max-width:1000px;margin:0 auto}
+.gallery-grid img{width:100%;height:220px;object-fit:cover;filter:grayscale(.2);transition:all .4s;cursor:pointer}
+.gallery-grid img:hover{filter:grayscale(0);transform:scale(1.02)}
+
+.testimonials{padding:4rem 2rem;max-width:700px;margin:0 auto;text-align:center}
+.test-text{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:rgba(200,191,169,.7);line-height:1.7;margin-bottom:1.5rem}
+.test-author{font-size:.78rem;color:rgba(200,191,169,.4)}
+
+.booking{padding:4rem 2rem;max-width:500px;margin:0 auto;text-align:center}
+.booking-form{display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
+.booking-form input,.booking-form select{padding:12px 16px;background:rgba(200,191,169,.06);border:1px solid rgba(200,191,169,.12);color:#c8bfa9;font-size:.82rem;outline:none;font-family:inherit}
+.booking-form input::placeholder{color:rgba(200,191,169,.3)}
+.booking-form select{appearance:none;cursor:pointer}
+.booking-form select option{background:#1a1a1a}
+.booking-submit{padding:14px;background:#c8bfa9;color:#0e0e0e;border:none;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.booking-submit:hover{background:#ede8df}
+
+.hours{padding:3rem 2rem;text-align:center}
+.hours-grid{display:inline-grid;grid-template-columns:auto auto;gap:.5rem 2.5rem;text-align:left;font-size:.82rem}
+.hours-grid .day{color:rgba(200,191,169,.4)}.hours-grid .time{color:#c8bfa9}
+
+.footer{padding:2rem;border-top:1px solid rgba(200,191,169,.06);text-align:center;font-size:.68rem;color:rgba(200,191,169,.25)}
+
+@media(max-width:768px){.hero h1{font-size:2.5rem}.hero-content{padding:0 1.5rem}.nav-links{display:none}.team-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="#" class="nav-logo">The Gentry</a>
+  <ul class="nav-links"><li><a href="#" onclick="document.querySelector('.services').scrollIntoView({behavior:'smooth'});return false">Services</a></li><li><a href="#" onclick="document.querySelector('.team').scrollIntoView({behavior:'smooth'});return false">Barbers</a></li><li><a href="#" onclick="document.querySelector('.gallery').scrollIntoView({behavior:'smooth'});return false">Gallery</a></li></ul>
+  <button class="book-btn" onclick="document.querySelector('.booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1759134198561-e2041049419c?w=1200&q=80" alt="Barbershop"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="line"></div>
+    <h1>Craft.<br>Precision.<br>Style.</h1>
+    <p>Traditional barbering meets modern sophistication. The art of grooming for the gentleman.</p>
+    <button class="book-btn" onclick="document.querySelector('.booking').scrollIntoView({behavior:'smooth'})">Book Appointment &#8594;</button>
+  </div>
+</section>
+
+<section class="services">
+  <div class="section-title"><div class="line"></div><h2>Our Services</h2><p>Premium grooming experiences</p></div>
+  <div class="service-item"><div><h3>Signature Haircut</h3><div class="desc">Consultation, wash, precision cut & style</div></div><div class="price">&euro;35</div></div>
+  <div class="service-item"><div><h3>Beard Sculpting</h3><div class="desc">Hot towel prep, trim, shape & oil finish</div></div><div class="price">&euro;25</div></div>
+  <div class="service-item"><div><h3>The Royal Treatment</h3><div class="desc">Haircut + beard + hot towel ritual + scalp massage</div></div><div class="price">&euro;65</div></div>
+  <div class="service-item"><div><h3>Straight Razor Shave</h3><div class="desc">Traditional wet shave with premium lather</div></div><div class="price">&euro;30</div></div>
+  <div class="service-item"><div><h3>Father & Son</h3><div class="desc">Two haircuts, shared experience</div></div><div class="price">&euro;55</div></div>
+  <div class="service-item"><div><h3>Hair Coloring</h3><div class="desc">Natural tones, grey blending, full color</div></div><div class="price">&euro;45+</div></div>
+</section>
+
+<section class="team">
+  <div class="section-title"><div class="line"></div><h2>Our Barbers</h2></div>
+  <div class="team-grid">
+    <div class="team-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" alt="Barber"><h4>Marco Rossi</h4><p>Master Barber &middot; 12 yrs</p></div>
+    <div class="team-card"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Barber"><h4>James Wilson</h4><p>Senior Stylist &middot; 8 yrs</p></div>
+    <div class="team-card"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&q=80" alt="Barber"><h4>David Park</h4><p>Color Specialist &middot; 6 yrs</p></div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="section-title"><div class="line"></div><h2>Our Work</h2></div>
+  <div class="gallery-grid">
+    <img src="https://images.unsplash.com/photo-1627238773196-423495d97424?w=400&q=80" alt="Work">
+    <img src="https://images.unsplash.com/photo-1781455793310-8427c96454c7?w=400&q=80" alt="Interior">
+    <img src="https://images.unsplash.com/photo-1610475680335-dafab5475150?w=400&q=80" alt="Chair">
+    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&q=80" alt="Tools">
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-title"><div class="line"></div><h2>Client Words</h2></div>
+  <p class="test-text">"The best barbershop I've been to. Marco understood exactly what I wanted without me saying much. The hot towel shave is an experience every man should try at least once."</p>
+  <div class="test-author">Thomas H. &mdash; Regular client since 2021</div>
+</section>
+
+<section class="booking">
+  <div class="section-title"><div class="line"></div><h2>Book Online</h2></div>
+  <form class="booking-form" onsubmit="event.preventDefault();this.querySelector('.booking-submit').textContent='Booked! See you soon.';this.querySelector('.booking-submit').style.background='#28a745';this.querySelector('.booking-submit').style.color='#fff'">
+    <input type="text" placeholder="Your Name" required>
+    <input type="tel" placeholder="Phone Number" required>
+    <select required><option value="" disabled selected>Select Service</option><option>Signature Haircut — €35</option><option>Beard Sculpting — €25</option><option>The Royal Treatment — €65</option><option>Straight Razor Shave — €30</option></select>
+    <select required><option value="" disabled selected>Preferred Barber</option><option>Marco Rossi</option><option>James Wilson</option><option>David Park</option><option>No Preference</option></select>
+    <input type="date" required>
+    <button class="booking-submit" type="submit">Confirm Booking</button>
+  </form>
+</section>
+
+<section class="hours">
+  <div class="section-title"><div class="line"></div><h2>Visit Us</h2></div>
+  <div class="hours-grid">
+    <span class="day">Monday — Friday</span><span class="time">9:00 — 20:00</span>
+    <span class="day">Saturday</span><span class="time">10:00 — 18:00</span>
+    <span class="day">Sunday</span><span class="time">Closed</span>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.78rem;color:rgba(200,191,169,.4)">23 Old Town Street, Bratislava &middot; +421 900 123 456</p>
+</section>
+
+<footer class="footer">&copy; 2025 The Gentry Barbershop &middot; All rights reserved</footer>
+</body>
+</html>

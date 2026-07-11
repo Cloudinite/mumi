@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APEX — Performance Gym</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#d0d0d0;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}
+.nav{position:fixed;top:0;width:100%;padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.94);backdrop-filter:blur(20px);z-index:100;border-bottom:1px solid rgba(255,255,255,.04)}
+.nav-logo{font-size:1.1rem;font-weight:900;color:#fff}.nav-logo span{color:#22d3ee}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-size:.72rem;color:#666;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:#22d3ee}
+.join-btn{padding:9px 20px;background:#22d3ee;color:#0a0a0a;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:all .3s}
+.join-btn:hover{background:#06b6d4}
+
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0}.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.22) contrast(1.1)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.95),rgba(10,10,10,.3))}
+.hero-content{position:relative;z-index:2;padding:0 3rem;max-width:600px}
+.hero h1{font-size:3.5rem;font-weight:900;line-height:.95;text-transform:uppercase;color:#fff;margin-bottom:1.2rem}
+.hero h1 .accent{color:#22d3ee}
+.hero p{font-size:.9rem;color:#777;line-height:1.7;margin-bottom:2rem;max-width:440px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-outline{padding:12px 24px;border:1px solid rgba(34,211,238,.3);color:#22d3ee;font-size:.75rem;font-weight:600;background:transparent;border-radius:6px;cursor:pointer;transition:all .3s}
+.btn-outline:hover{background:rgba(34,211,238,.08)}
+
+.programs{padding:4rem 2rem;max-width:1000px;margin:0 auto}
+.programs h2{font-size:1.5rem;font-weight:800;text-transform:uppercase;text-align:center;color:#fff;margin-bottom:2rem}
+.program-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem}
+.program-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:10px;overflow:hidden;transition:all .3s;cursor:pointer}
+.program-card:hover{border-color:rgba(34,211,238,.2);transform:translateY(-3px)}
+.program-card img{width:100%;height:180px;object-fit:cover;filter:brightness(.65)}
+.program-body{padding:1.2rem}
+.program-body h3{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.program-body p{font-size:.75rem;color:#666;line-height:1.5}
+
+.trainers{padding:4rem 2rem}
+.trainers h2{font-size:1.5rem;font-weight:800;text-transform:uppercase;text-align:center;color:#fff;margin-bottom:2rem}
+.trainer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;max-width:900px;margin:0 auto}
+.trainer-card{text-align:center}
+.trainer-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;filter:brightness(.75);transition:all .3s}
+.trainer-card:hover img{filter:brightness(.9);transform:translateY(-3px)}
+.trainer-card h4{font-size:.8rem;font-weight:700;color:#fff;margin-top:.7rem}
+.trainer-card p{font-size:.65rem;color:#22d3ee}
+.trainer-card .bio{font-size:.68rem;color:#666;margin-top:.2rem}
+
+.pricing{padding:4rem 2rem;background:rgba(255,255,255,.01)}
+.pricing h2{font-size:1.5rem;font-weight:800;text-transform:uppercase;text-align:center;color:#fff;margin-bottom:.5rem}
+.pricing .sub{text-align:center;color:#666;font-size:.8rem;margin-bottom:2.5rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;max-width:900px;margin:0 auto}
+.price-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:1.8rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.price-card.popular{border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.03)}
+.price-card.popular::before{content:'POPULAR';position:absolute;top:10px;right:-26px;transform:rotate(45deg);background:#22d3ee;color:#0a0a0a;font-size:.5rem;font-weight:800;padding:3px 28px;letter-spacing:.08em}
+.price-card:hover{transform:translateY(-3px)}
+.price-card h3{font-size:.75rem;font-weight:700;text-transform:uppercase;color:#888;letter-spacing:.08em;margin-bottom:.8rem}
+.price-card .amount{font-size:2.2rem;font-weight:900;color:#fff}
+.price-card .amount span{font-size:.75rem;font-weight:400;color:#666}
+.price-card .period{font-size:.68rem;color:#666;margin-bottom:1.2rem}
+.price-card ul{list-style:none;text-align:left;margin-bottom:1.2rem}
+.price-card ul li{font-size:.72rem;color:#888;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.price-card ul li::before{content:'\2713 ';color:#22d3ee;font-weight:700;margin-right:.4rem}
+.price-cta{width:100%;padding:10px;border:1px solid rgba(34,211,238,.25);color:#22d3ee;background:transparent;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .3s}
+.price-cta:hover{background:#22d3ee;color:#0a0a0a}
+.price-card.popular .price-cta{background:#22d3ee;color:#0a0a0a;border-color:#22d3ee}
+
+.schedule{padding:4rem 2rem;max-width:700px;margin:0 auto}
+.schedule h2{font-size:1.5rem;font-weight:800;text-transform:uppercase;text-align:center;color:#fff;margin-bottom:2rem}
+.schedule-table{width:100%;border-collapse:collapse}
+.schedule-table th{font-size:.65rem;color:#22d3ee;text-transform:uppercase;letter-spacing:.08em;padding:.8rem .5rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.schedule-table td{font-size:.72rem;color:#888;padding:.7rem .5rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.schedule-table td.highlight{color:#fff;font-weight:600}
+
+.stats{padding:3rem 2rem;display:flex;justify-content:center;gap:4rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:2.5rem;font-weight:900;color:#22d3ee}
+.stat-label{font-size:.65rem;color:#666;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem}
+
+.faq{padding:4rem 2rem;max-width:600px;margin:0 auto}
+.faq h2{font-size:1.5rem;font-weight:800;text-transform:uppercase;text-align:center;color:#fff;margin-bottom:2rem}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.04);padding:1rem 0;cursor:pointer}
+.faq-q{font-size:.82rem;font-weight:600;color:#ddd;display:flex;justify-content:space-between;align-items:center}
+.faq-q span{color:#22d3ee;font-size:1.2rem;transition:transform .3s}
+.faq-a{font-size:.75rem;color:#777;line-height:1.6;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding-top:.8rem}
+.faq-item.open .faq-q span{transform:rotate(45deg)}
+
+.footer{padding:2rem;border-top:1px solid rgba(255,255,255,.03);display:flex;justify-content:space-between;font-size:.65rem;color:#444}
+@media(max-width:768px){.hero h1{font-size:2.5rem}.hero-content{padding:0 1.5rem}.nav-links{display:none}.pricing-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="#" class="nav-logo">APEX<span>.</span></a>
+  <ul class="nav-links"><li><a href="#" onclick="document.querySelector('.programs').scrollIntoView({behavior:'smooth'});return false">Programs</a></li><li><a href="#" onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'});return false">Pricing</a></li><li><a href="#" onclick="document.querySelector('.schedule').scrollIntoView({behavior:'smooth'});return false">Schedule</a></li></ul>
+  <button class="join-btn" onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'})">Join Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80" alt="Gym"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Push Your<br><span class="accent">Limits</span></h1>
+    <p>Elite training programs designed to transform your body and mind. State-of-the-art equipment. World-class trainers.</p>
+    <div class="hero-btns">
+      <button class="join-btn" style="padding:12px 28px" onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'})">Start Free Trial</button>
+      <button class="btn-outline" onclick="document.querySelector('.programs').scrollIntoView({behavior:'smooth'})">View Programs</button>
+    </div>
+  </div>
+</section>
+
+<section class="programs">
+  <h2>Our Programs</h2>
+  <div class="program-grid">
+    <div class="program-card"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&q=80" alt="Strength"><div class="program-body"><h3>Strength & Power</h3><p>Progressive overload training with compound lifts for maximum strength gains.</p></div></div>
+    <div class="program-card"><img src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74?w=400&q=80" alt="HIIT"><div class="program-body"><h3>HIIT Performance</h3><p>High-intensity intervals to shred fat and boost cardiovascular endurance.</p></div></div>
+    <div class="program-card"><img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400&q=80" alt="PT"><div class="program-body"><h3>Personal Training</h3><p>1-on-1 coaching with certified trainers tailored to your goals.</p></div></div>
+  </div>
+</section>
+
+<section class="trainers">
+  <h2>Expert Trainers</h2>
+  <div class="trainer-grid">
+    <div class="trainer-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" alt="Trainer"><h4>Alex Rivera</h4><p>Head Coach</p><div class="bio">NSCA Certified, 10+ years</div></div>
+    <div class="trainer-card"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80" alt="Trainer"><h4>Maria Santos</h4><p>HIIT Specialist</p><div class="bio">CrossFit L3, 8 years</div></div>
+    <div class="trainer-card"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Trainer"><h4>James Kim</h4><p>Strength Coach</p><div class="bio">Olympic Lifting, 12 years</div></div>
+    <div class="trainer-card"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" alt="Trainer"><h4>Emma Clark</h4><p>Yoga & Recovery</p><div class="bio">RYT-500, 6 years</div></div>
+  </div>
+</section>
+
+<section class="pricing">
+  <h2>Membership Plans</h2>
+  <div class="sub">No contracts. Cancel anytime.</div>
+  <div class="pricing-grid">
+    <div class="price-card"><h3>Starter</h3><div class="amount">&euro;29<span>/mo</span></div><div class="period">Billed monthly</div><ul><li>Gym floor access</li><li>Locker room</li><li>Free WiFi</li><li>Group classes (3x/week)</li></ul><button class="price-cta">Get Started</button></div>
+    <div class="price-card popular"><h3>Pro</h3><div class="amount">&euro;59<span>/mo</span></div><div class="period">Billed monthly</div><ul><li>Everything in Starter</li><li>Unlimited classes</li><li>Sauna & steam</li><li>2 PT sessions/month</li></ul><button class="price-cta">Get Started</button></div>
+    <div class="price-card"><h3>Elite</h3><div class="amount">&euro;99<span>/mo</span></div><div class="period">Billed monthly</div><ul><li>Everything in Pro</li><li>Unlimited PT</li><li>Nutrition coaching</li><li>Priority booking</li></ul><button class="price-cta">Get Started</button></div>
+  </div>
+</section>
+
+<section class="schedule">
+  <h2>Weekly Schedule</h2>
+  <table class="schedule-table">
+    <tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr>
+    <tr><td>06:00</td><td class="highlight">HIIT</td><td>Yoga</td><td class="highlight">HIIT</td><td>Yoga</td><td class="highlight">HIIT</td></tr>
+    <tr><td>08:00</td><td>Strength</td><td class="highlight">CrossFit</td><td>Strength</td><td class="highlight">CrossFit</td><td>Strength</td></tr>
+    <tr><td>12:00</td><td>Express</td><td>Express</td><td>Express</td><td>Express</td><td>Express</td></tr>
+    <tr><td>17:00</td><td class="highlight">Boxing</td><td>Spin</td><td class="highlight">Boxing</td><td>Spin</td><td>Open Gym</td></tr>
+    <tr><td>19:00</td><td>Yoga</td><td class="highlight">Strength</td><td>Yoga</td><td class="highlight">Strength</td><td>Recovery</td></tr>
+  </table>
+</section>
+
+<section class="stats">
+  <div class="stat"><div class="stat-num">5K+</div><div class="stat-label">Active Members</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Expert Trainers</div></div>
+  <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Open Hours</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+</section>
+
+<section class="faq">
+  <h2>FAQ</h2>
+  <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Can I try before committing?<span>+</span></div><div class="faq-a">Absolutely! We offer a free 7-day trial for all new members. No credit card required.</div></div>
+  <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">What are the opening hours?<span>+</span></div><div class="faq-a">We're open 24/7, 365 days a year. Staffed hours are 6:00–22:00 Mon-Sat, 8:00–20:00 Sun.</div></div>
+  <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Can I freeze my membership?<span>+</span></div><div class="faq-a">Yes, you can freeze your membership for up to 3 months per year at no extra cost.</div></div>
+  <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Do you offer corporate plans?<span>+</span></div><div class="faq-a">We offer discounted corporate memberships for teams of 5+. Contact us for custom pricing.</div></div>
+</section>
+
+<footer class="footer"><span>&copy; 2025 APEX Performance Gym</span><span>Vienna, Austria &middot; hello@apexgym.com</span></footer>
+</body>
+</html>
