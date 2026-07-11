@@ -1,46 +1,87 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#07090B"/><meta name="description" content="Mumi — I build elite websites that turn visitors into customers"/><link rel="icon" type="image/svg+xml" href="./favicon.svg"/><link rel="apple-touch-icon" href="./apple-touch-icon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/><title>Mumi — Premium Web Developer</title><link href="./static/css/main.280a54be.css" rel="stylesheet"/><script defer src="./static/js/main.8ec88cb8.js"></script><style>
-/* ── Loading Screen ── */
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#07090B"/>
+<meta name="description" content="Mumi — I build elite websites that turn visitors into customers"/>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
+<link rel="apple-touch-icon" href="./apple-touch-icon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Mumi — Premium Web Developer</title>
+<script defer src="./static/js/main.6284e4d7.js"></script>
+<link href="./static/css/main.c6ad2bcf.css" rel="stylesheet"/>
+<style>
+/* Loading screen */
 #loader{position:fixed;inset:0;z-index:9999;background:#07090B;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease}
 #loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-#loader .logo-text{font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:2.2rem;color:#E6EAF0;letter-spacing:-.02em;opacity:0;animation:loaderFadeUp .6s ease forwards .1s}
+#loader .logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.2rem;color:#E6EAF0;letter-spacing:-.02em;opacity:0;animation:fadeUp .6s ease forwards .1s}
 #loader .logo-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22D3EE;margin-left:1px;vertical-align:baseline;margin-bottom:2px}
-#loader .loader-bar{width:48px;height:3px;background:rgba(255,255,255,.06);border-radius:3px;margin-top:1.5rem;overflow:hidden;opacity:0;animation:loaderFadeUp .4s ease forwards .4s}
-#loader .loader-bar-fill{width:100%;height:100%;background:#22D3EE;border-radius:3px;transform-origin:left;animation:loaderProgress 1.2s ease-in-out forwards .5s}
-@keyframes loaderFadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes loaderProgress{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+#loader .bar{width:48px;height:3px;background:rgba(255,255,255,.06);border-radius:3px;margin-top:1.5rem;overflow:hidden;opacity:0;animation:fadeUp .4s ease forwards .4s}
+#loader .bar-fill{width:100%;height:100%;background:#22D3EE;border-radius:3px;transform-origin:left;animation:progress 1.2s ease-in-out forwards .5s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes progress{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+#root{opacity:0;transition:opacity .6s ease .1s}
+#root.loaded{opacity:1}
 
-/* ── Page entrance after loader ── */
-#root{opacity:0;transform:translateY(8px);transition:opacity .6s ease .1s,transform .6s ease .1s}
-#root.loaded{opacity:1;transform:translateY(0)}
+/* Bottom toolbar — OUTSIDE React, guaranteed fixed */
+#bottom-toolbar{position:fixed;bottom:20px;left:20px;z-index:9990;display:flex;gap:8px;align-items:flex-end}
+.tb{height:40px;border-radius:20px;background:rgba(11,15,20,.92);border:1px solid rgba(255,255,255,.1);color:#AAB4C0;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:color .2s,border-color .2s;font-family:'Inter',sans-serif}
+.tb:hover{color:#22d3ee;border-color:rgba(34,211,238,.3)}
+.tb:active{transform:scale(.92)}
+.tb svg{width:16px;height:16px}
+#scroll-btn{width:40px}
+#lang-trigger{padding:0 14px;gap:6px}
+#lang-trigger .lc{font-size:11px;font-weight:600}
+#lang-dd{position:absolute;bottom:calc(100% + 8px);left:0;display:none;flex-direction:column;gap:2px;padding:6px;border-radius:12px;background:rgba(11,15,20,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 40px rgba(0,0,0,.5);min-width:138px}
+#lang-dd.open{display:flex}
+.lo{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:none;background:none;color:#AAB4C0;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:background .15s,color .15s;text-align:left;width:100%}
+.lo:hover{background:rgba(255,255,255,.05);color:#fff}
+.lo.on{background:rgba(34,211,238,.1);color:#22d3ee}
+.lo .cd{font-weight:700;width:22px}
+.lo .ck{margin-left:auto;font-size:10px;color:#22d3ee}
+</style>
+</head><body>
 
-/* ── Scroll-to-top button — ALWAYS visible ── */
-#scroll-top-btn{position:fixed!important;bottom:20px!important;left:20px!important;z-index:9990!important;width:40px;height:40px;border-radius:50%;background:rgba(11,15,20,.92);border:1px solid rgba(255,255,255,.1);color:#AAB4C0;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:color .2s,border-color .2s}
-#scroll-top-btn:hover{color:#22d3ee;border-color:rgba(34,211,238,.3)}
-#scroll-top-btn:active{transform:scale(.92)}
-#scroll-top-btn svg{width:16px;height:16px}
-
-/* ── Language switcher — ALWAYS fixed, next to scroll btn ── */
-[data-testid="navbar-language-switcher"]{position:fixed!important;bottom:20px!important;left:68px!important;z-index:9990!important}
-</style></head><body>
-
-<!-- Loading Screen -->
-<div id="loader">
-  <div class="logo-text">Mumi<span class="logo-dot"></span></div>
-  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
-</div>
+<div id="loader"><div class="logo-text">Mumi<span class="logo-dot"></span></div><div class="bar"><div class="bar-fill"></div></div></div>
 
 <div id="root"></div>
 
-<!-- Scroll to top button — always visible -->
-<div id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+<!-- Fixed bottom-left: scroll + language — OUTSIDE #root -->
+<div id="bottom-toolbar">
+  <button class="tb" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <div style="position:relative">
+    <button class="tb" id="lang-trigger" onclick="document.getElementById('lang-dd').classList.toggle('open')" aria-label="Change language">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg>
+      <span class="lc" id="lang-label">EN</span>
+    </button>
+    <div id="lang-dd">
+      <button class="lo on" data-l="en" onclick="sw('en')"><span class="cd">EN</span>English<span class="ck">&#10003;</span></button>
+      <button class="lo" data-l="sk" onclick="sw('sk')"><span class="cd">SK</span>Slovensky</button>
+      <button class="lo" data-l="ru" onclick="sw('ru')"><span class="cd">RU</span>Русский</button>
+      <button class="lo" data-l="de" onclick="sw('de')"><span class="cd">DE</span>Deutsch</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// Hide loader and reveal page when React mounts
-var loader=document.getElementById('loader'),root=document.getElementById('root');
-var obs=new MutationObserver(function(){if(root.children.length>0){root.classList.add('loaded');setTimeout(function(){loader.classList.add('hide')},200);obs.disconnect()}});
-obs.observe(root,{childList:true});
-setTimeout(function(){root.classList.add('loaded');loader.classList.add('hide')},3000);
+// Loader hide
+var ld=document.getElementById('loader'),rt=document.getElementById('root');
+var ob=new MutationObserver(function(){if(rt.children.length>0){rt.classList.add('loaded');setTimeout(function(){ld.classList.add('hide')},200);ob.disconnect()}});
+ob.observe(rt,{childList:true});
+setTimeout(function(){rt.classList.add('loaded');ld.classList.add('hide')},3000);
+
+// Language switch
+function sw(c){
+  document.querySelectorAll('.lo').forEach(function(b){b.classList.toggle('on',b.dataset.l===c);var k=b.querySelector('.ck');if(k)k.remove();if(b.dataset.l===c){var s=document.createElement('span');s.className='ck';s.textContent='\u2713';b.appendChild(s)}});
+  document.getElementById('lang-label').textContent=c.toUpperCase();
+  document.getElementById('lang-dd').classList.remove('open');
+  if(window.__i18n)window.__i18n.changeLanguage(c);
+  document.dispatchEvent(new CustomEvent('langchange',{detail:c}));
+}
+// Close dropdown on outside click
+document.addEventListener('click',function(e){if(!e.target.closest('#lang-trigger')&&!e.target.closest('#lang-dd'))document.getElementById('lang-dd').classList.remove('open')});
 </script>
 </body></html>
