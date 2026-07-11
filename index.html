@@ -40,6 +40,20 @@
 .lo.on{background:rgba(34,211,238,.1);color:#22d3ee}
 .lo .cd{font-weight:700;width:22px}
 .lo .ck{margin-left:auto;font-size:10px;color:#22d3ee}
+/* Cookie banner */
+#cookie-banner{display:none;position:fixed;bottom:20px;right:20px;z-index:9980;max-width:380px;padding:20px;border-radius:16px;background:rgba(11,15,20,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);box-shadow:0 16px 50px rgba(0,0,0,.5);flex-direction:column;gap:14px;font-family:'Inter',sans-serif;animation:cookieIn .4s ease}
+@keyframes cookieIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#cookie-banner .cookie-icon{font-size:20px;margin-bottom:2px}
+#cookie-msg{font-size:12px;color:#AAB4C0;line-height:1.6}
+#cookie-policy{font-size:11px;color:#22d3ee;text-decoration:none;font-weight:500;transition:color .2s}
+#cookie-policy:hover{color:#67e8f9}
+.cookie-btns{display:flex;gap:8px;margin-top:2px}
+.cookie-btns button{flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:background .2s,transform .1s;font-family:'Inter',sans-serif}
+.cookie-btns button:active{transform:scale(.96)}
+#cookie-accept{background:#22d3ee;color:#07090B}
+#cookie-accept:hover{background:#67e8f9}
+#cookie-decline{background:rgba(255,255,255,.06);color:#AAB4C0;border:1px solid rgba(255,255,255,.1)}
+#cookie-decline:hover{background:rgba(255,255,255,.1)}
 </style>
 </head><body>
 
@@ -66,6 +80,17 @@
   </div>
 </div>
 
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner">
+  <div><span class="cookie-icon">&#128274;</span></div>
+  <p id="cookie-msg">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+  <a id="cookie-policy" href="https://gdpr.eu/cookies/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+  <div class="cookie-btns">
+    <button id="cookie-decline" onclick="declineCookies()">Decline</button>
+    <button id="cookie-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
 <script>
 // Loader hide
 var ld=document.getElementById('loader'),rt=document.getElementById('root');
@@ -83,5 +108,35 @@ function sw(c){
 }
 // Close dropdown on outside click
 document.addEventListener('click',function(e){if(!e.target.closest('#lang-trigger')&&!e.target.closest('#lang-dd'))document.getElementById('lang-dd').classList.remove('open')});
+
+// Cookie consent - translations
+var cookieT={
+  en:{msg:'We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.',accept:'Accept',decline:'Decline',policy:'Privacy Policy'},
+  sk:{msg:'Používame cookies na zlepšenie vášho zážitku. Pokračovaním v návšteve tejto stránky súhlasíte s používaním cookies.',accept:'Prijať',decline:'Odmietnuť',policy:'Zásady ochrany osobných údajov'},
+  ru:{msg:'Мы используем файлы cookie для улучшения вашего опыта. Продолжая посещать этот сайт, вы соглашаетесь с использованием файлов cookie.',accept:'Принять',decline:'Отклонить',policy:'Политика конфиденциальности'},
+  de:{msg:'Wir verwenden Cookies, um Ihr Erlebnis zu verbessern. Durch die weitere Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.',accept:'Akzeptieren',decline:'Ablehnen',policy:'Datenschutzrichtlinie'}
+};
+var cLang='en';
+function updateCookie(){
+  var t=cookieT[cLang]||cookieT.en;
+  var m=document.getElementById('cookie-msg');
+  var a=document.getElementById('cookie-accept');
+  var d=document.getElementById('cookie-decline');
+  var p=document.getElementById('cookie-policy');
+  if(m)m.textContent=t.msg;
+  if(a)a.textContent=t.accept;
+  if(d)d.textContent=t.decline;
+  if(p)p.textContent=t.policy;
+}
+// Listen for language changes
+document.addEventListener('langchange',function(e){cLang=e.detail;updateCookie()});
+// Show cookie banner if not accepted
+if(!localStorage.getItem('cookie-consent')){
+  document.getElementById('cookie-banner').style.display='flex';
+}
+// Dynamic copyright year
+document.addEventListener('DOMContentLoaded',function(){setInterval(function(){document.querySelectorAll('footer, [class*=footer]').forEach(function(f){f.querySelectorAll('span,p,div').forEach(function(el){if(el.textContent.includes('2025')){el.textContent=el.textContent.replace('2025',new Date().getFullYear())}})})},500)});
+function acceptCookies(){localStorage.setItem('cookie-consent','accepted');document.getElementById('cookie-banner').style.display='none'}
+function declineCookies(){document.getElementById('cookie-banner').style.display='none'}
 </script>
 </body></html>
